@@ -16,13 +16,52 @@ public class Pathmaker : MonoBehaviour {
 
 //	DECLARE CLASS MEMBER VARIABLES:
 //	Declare a private integer called counter that starts at 0; 		// counter var will track how many floor tiles I've instantiated
-//	Declare a public Transform called floorPrefab, assign the prefab in inspector;
+	private int counter = 0;
+	//	Declare a public Transform called floorPrefab, assign the prefab in inspector;
+	public Transform floorPrefab;
 //	Declare a public Transform called pathmakerSpherePrefab, assign the prefab in inspector; 		// you'll have to make a "pathmakerSphere" prefab later
+	public Transform pathmakerSpherePrefab;
 
+	public static int globalTileCount;
 
 	void Update () {
 //		If counter is less than 50, then:
-//			Generate a random number from 0.0f to 1.0f;
+//		Generate a random number from 0.0f to 1.0f;
+		
+		if (counter < 50)
+		{
+			float num = Random.Range(0.0f, 1.0f);
+			if (num < .25f)
+			{
+				transform.Rotate(0f, 90f, 0f);
+				//Debug.Log("A");
+			}
+			else if (num > .25f && num < 0.5f)
+			{
+				transform.Rotate(0f, -90f, 0f);
+				//Debug.Log("B");
+			}
+			else if (num > .99f && num < 1.0f)
+			{
+				Instantiate(pathmakerSpherePrefab, transform.position, transform.rotation);
+				//Debug.Log("C)");
+			}
+
+			Instantiate(floorPrefab, transform.position, Quaternion.Euler(0, 0, 0));
+			
+			transform.position = Vector3.MoveTowards(
+				transform.position,
+				transform.position + (transform.forward.normalized *  5f),
+				5f);
+			
+			counter++;
+
+			//Debug.Log("D");
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 //			If random number is less than 0.25f, then rotate myself 90 degrees;
 //				... Else if number is 0.25f-0.5f, then rotate myself -90 degrees;
 //				... Else if number is 0.99f-1.0f, then instantiate a pathmakerSpherePrefab clone at my current position;
