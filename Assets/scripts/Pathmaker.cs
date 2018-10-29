@@ -28,7 +28,7 @@ public class Pathmaker : MonoBehaviour {
 //		If counter is less than 50, then:
 //		Generate a random number from 0.0f to 1.0f;
 		
-		if (counter < 50)
+		if (counter < 50 && globalTileCount < 500)
 		{
 			float num = Random.Range(0.0f, 1.0f);
 			if (num < .25f)
@@ -41,7 +41,7 @@ public class Pathmaker : MonoBehaviour {
 				transform.Rotate(0f, -90f, 0f);
 				//Debug.Log("B");
 			}
-			else if (num > .99f && num < 1.0f)
+			else if (num > .85f && num < 1.0f)
 			{
 				Instantiate(pathmakerSpherePrefab, transform.position, transform.rotation);
 				//Debug.Log("C)");
@@ -55,6 +55,7 @@ public class Pathmaker : MonoBehaviour {
 				5f);
 			
 			counter++;
+			globalTileCount++;
 
 			//Debug.Log("D");
 		}
@@ -62,6 +63,8 @@ public class Pathmaker : MonoBehaviour {
 		{
 			Destroy(gameObject);
 		}
+
+
 //			If random number is less than 0.25f, then rotate myself 90 degrees;
 //				... Else if number is 0.25f-0.5f, then rotate myself -90 degrees;
 //				... Else if number is 0.99f-1.0f, then instantiate a pathmakerSpherePrefab clone at my current position;
